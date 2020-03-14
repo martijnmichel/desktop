@@ -12,13 +12,48 @@
   >
     <div class="row q-col-gutter-xs">
       <div class="col-12">
-        <q-bar dense @mousedown="startDrag()">
-          <q-btn dense flat round icon="lens" size="8.5px" color="red" />
+        <q-bar dense @mousedown="setDraggable()">
+          <q-btn
+            dense
+            flat
+            round
+            icon="lens"
+            size="8.5px"
+            color="red"
+            @click="close()"
+          />
           <q-btn dense flat round icon="lens" size="8.5px" color="yellow" />
-          <q-btn dense flat round icon="lens" size="8.5px" color="green" />
+          <q-btn
+            dense
+            flat
+            round
+            icon="lens"
+            size="8.5px"
+            color="green"
+            @click="window.maximize()"
+          />
           <div class="col text-center text-weight-bold">
             {{ window.title }}
           </div>
+        </q-bar>
+        <q-bar style="min-width: 250px;" dense class="bg-grey-2">
+          <template v-for="(menu, index) in window.menu">
+            <div class="cursor-pointer non-selectable" v-bind:key="index">
+              {{ menu.name }}
+              <q-menu>
+                <q-list dense style="min-width: 100px">
+                  <q-item
+                    clickable
+                    v-close-popup
+                    v-for="(item, itemIndex) in menu.items"
+                    v-bind:key="`item${itemIndex}`"
+                  >
+                    <q-item-section>{{ item.name }}</q-item-section>
+                  </q-item>
+                </q-list>
+              </q-menu>
+            </div>
+          </template>
         </q-bar>
       </div>
 
@@ -30,42 +65,66 @@
 </template>
 
 <script lang="ts">
-import Vue from 'vue';
+import { defineComponent, onMounted } from '@vue/composition-api';
+import { WindowInterface } from 'src/interfaces/Window';
+import store from 'src/store';
 
-export default Vue.extend({
-  name: 'Window' as string,
-  data() {
-    return {};
-  },
-  props: ['window'],
-  computed: {},
-  mounted() {
-    this.$nextTick(() => {
-      // Get the element by id
-      const element = document.getElementById(`window-${this.window.id}`);
-      // Add the ondragstart event listener
-      if (element) {
-        element.addEventListener('dragstart', this.drag, false);
-        element.addEventListener('dragend', this.dragend, false);
-      }
+/**
+ *
+ *
+ *        DEFINE WINDOW FUNCTIONS
+ *
+ *
+ */
+
+function useWindow(window: WindowInterface) {
+  function setDraggable() {
+    const element = document.getElementById(`window-${window.id}`);
+    if (element) element.setAttribute('draggable', 'true');
+  }
+
+  function dragstart(event: Event) {
+    console.log(event);
+  }
+  function dragend(e: Event) {
+    const element = document.getElementById(`window-${window.id}`);
+    if (element) element.removeAttribute('draggable');
+    store.commit('wm/updateWindow', {
+      window: window,
+      context: e
     });
-  },
-  methods: {
-    startDrag() {
-      const element = document.getElementById(`window-${this.window.id}`);
-      if (element) element.setAttribute('draggable', 'true');
-    },
-    drag(event: Event) {
-      console.log(event);
-    },
-    dragend(e: Event) {
-      const element = document.getElementById(`window-${this.window.id}`);
-      if (element) element.removeAttribute('draggable');
-      this.$store.commit('wm/updateWindow', {
-        window: this.window,
-        context: e
-      });
+  }
+
+  function close() {
+    store.commit('wm/closeWindow', window.id);
+  }
+
+  onMounted(() => {
+    const element = document.getElementById(`window-${window.id}`);
+    // Add the ondragstart event listener
+
+    if (element) {
+      element.addEventListener('dragstart', dragstart, false);
+      element.addEventListener('dragend', dragend, false);
     }
+  });
+
+  return {
+    setDraggable,
+    dragstart,
+    dragend,
+    onMounted,
+    close
+  };
+}
+
+export default defineComponent({
+  name: 'Window' as string,
+  props: {
+    window: Object
+  },
+  setup({ window }) {
+    return { ...useWindow(window) };
   }
 });
 </script>

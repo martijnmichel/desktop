@@ -5,4 +5,6 @@ export interface WindowInterface {
   width?: number;
   height?: number;
   theme?: string;
+  x?: number;
+  y?: number;
 }

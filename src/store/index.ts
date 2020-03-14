@@ -1,6 +1,7 @@
 import { HasSsrBootParams } from 'quasar';
 import { VueConstructor } from 'vue';
 import Vuex from 'vuex';
+import Vue from 'vue';
 
 import wm from './wm';
 
@@ -22,19 +23,17 @@ export interface StoreInterface {
   example: unknown;
 }
 
-export default function({ Vue }: StoreBootParams) {
-  Vue.use(Vuex);
+Vue.use(Vuex);
 
-  const Store = new Vuex.Store({
-    modules: {
-      // example
-      wm
-    },
+const Store = new Vuex.Store({
+  modules: {
+    // example
+    wm
+  },
 
-    // enable strict mode (adds overhead!)
-    // for dev mode only
-    strict: !!process.env.DEV
-  });
+  // enable strict mode (adds overhead!)
+  // for dev mode only
+  strict: !!process.env.DEV
+});
 
-  return Store;
-}
+export default Store;

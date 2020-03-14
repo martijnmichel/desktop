@@ -1,31 +1,23 @@
 <template>
-  <q-layout view="lHh Lpr lFf">
+  <q-layout view="lHh Lpr lFf" id="main">
     <q-dialog
       v-model="state.bar"
       position="bottom"
       color="transparent"
       seamless
     >
-      <q-toolbar>
-        <q-btn
-          flat
-          dense
-          round
-          icon="menu"
-          @click="state.dash = true"
-          aria-label="Menu"
-        >
-        </q-btn>
+      <div class="bottomNav">
+        <blurred-bg />
+        <q-toolbar dark>
+          <Dash />
 
-        <q-dialog maximized v-model="state.dash" transition-show="fadeIn">
-          <q-card class="bg-blurred d-flex flex-center">
-            <q-btn @click="state.dash = false" label="X" />
-            <q-btn icon="explorer" label="exploer" @click="add()" />
-          </q-card>
-        </q-dialog>
-
-        <div>Quasar v{{ $q.version }}</div>
-      </q-toolbar>
+          <template v-for="window in windows">
+            <q-avatar rounded v-bind:key="window.id">
+              <q-img :src="window.icon" />
+            </q-avatar>
+          </template>
+        </q-toolbar>
+      </div>
     </q-dialog>
 
     <q-page-container>
@@ -35,16 +27,39 @@
   </q-layout>
 </template>
 
+<style scoped>
+#main {
+  background: url('/statics/bg.jpeg') center center no-repeat;
+  background-size: cover;
+}
+.bottomNav {
+  position: relative;
+  min-width: 300px;
+}
+</style>
+
 <script lang="ts">
-import { defineComponent, PropType, reactive, ref } from '@vue/composition-api';
+import {
+  defineComponent,
+  PropType,
+  reactive,
+  ref,
+  computed
+} from '@vue/composition-api';
 
 import WindowManager from 'src/components/WindowManager.vue';
+import BlurredBg from 'src/components/gfx/BlurredBG.vue';
+import Dash from 'src/components/Dash.vue';
+
+import store from 'src/store';
 
 export default defineComponent({
   name: 'MainLayout',
 
   components: {
-    WindowManager
+    WindowManager,
+    BlurredBg,
+    Dash
   },
 
   setup() {
@@ -53,13 +68,16 @@ export default defineComponent({
       dash: false
     });
 
+    const windows = computed(() => store.getters['wm/allWindows']);
+
     function add() {
-      this.$store.commit('wm/addWindow', { app: 'explorer' });
+      store.commit('wm/addWindow', { app: 'explorer' });
       state.dash = false;
     }
     return {
       state,
-      add
+      add,
+      windows
     };
   }
 });

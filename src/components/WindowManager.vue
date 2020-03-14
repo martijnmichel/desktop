@@ -7,23 +7,19 @@
 </template>
 
 <script lang="ts">
-import Vue from 'vue';
+import { defineComponent, computed } from '@vue/composition-api';
 
 import Window from 'src/components/Window.vue';
+import store from 'src/store';
 
-export default Vue.extend({
+export default defineComponent({
   name: 'PageIndex' as string,
-  data() {
-    return {};
-  },
   components: { Window },
-  computed: {
-    windows() {
-      return this.$store.getters['wm/allWindows'];
-    }
-  },
-  mounted() {},
-  methods: {}
+  computed: {},
+  setup() {
+    const windows = computed(() => store.getters['wm/allWindows']);
+    return { windows };
+  }
 });
 </script>
 

@@ -1,24 +1,41 @@
 import { WindowInterface } from 'src/interfaces/Window';
 import store from 'src/store';
 import _ from 'lodash';
-const uniqid = require('uniqid');
+import uniqid from 'uniqid';
+
 export default class Window {
-  public title?: string = `Window ${store.getters['wm/allWindows'].length + 1}`;
   protected id: number = uniqid();
-  public app = 'emtpy';
-  public width?: number = 480;
-  public height?: number = 320;
+  public width?: number | any = 480;
+  public height?: number | any = 320;
   public x?: number = 10;
   public y?: number = 10;
   public theme?: string = 'light';
+  public menu = [
+    {
+      name: 'File',
+      items: [
+        {
+          name: 'Close',
+          action: this.close
+        }
+      ]
+    }
+  ];
   public constructor(event: WindowInterface) {
     _.each(event, (e: Event, k: string) => (this[k] = e));
     this.setPosition();
+    store.commit('wm/addWindow', this);
   }
   public setPosition() {
-    _.each(store.getters['wm/allWindows'], w => {
+    _.each(store.getters['wm/allWindows'], (w: WindowInterface) => {
       if (w.x === this.x) this.x += 20;
       if (w.y === this.y) this.y += 20;
     });
+  }
+  public close() {
+    store.commit('wm/closeWindow', this.id);
+  }
+  public maximize() {
+    store.commit('wm/updateWindow', { window: this });
   }
 }
