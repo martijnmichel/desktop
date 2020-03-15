@@ -25,8 +25,12 @@ export default class Window {
       ]
     }
   ];
-  public constructor(event: WindowInterface) {
-    _.each(event, (e: Event, k: string) => (this[k] = e));
+  public constructor(e: WindowInterface = {}) {
+    if (e.width) this.width = e.width;
+    if (e.height) this.height = e.height;
+    if (e.x) this.x = e.x;
+    if (e.y) this.y = e.y;
+
     this.setPosition();
     store.commit('wm/addWindow', this);
   }

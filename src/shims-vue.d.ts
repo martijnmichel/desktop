@@ -8,3 +8,4 @@ declare module '*.vue' {
 declare module 'lodash';
 
 declare module 'uniqid';
+declare module 'vue-draggable-resizable';
