@@ -1,14 +1,15 @@
 import { WindowInterface } from 'src/interfaces/Window';
+
 import store from 'src/store';
 import _ from 'lodash';
 import uniqid from 'uniqid';
 
 export default class Window {
   protected id: number = uniqid();
-  public width?: number | any = 480;
-  public height?: number | any = 320;
-  public x?: number = 10;
-  public y?: number = 10;
+  public width = 480;
+  public height = 320;
+  public x = 10;
+  public y = 10;
   public theme?: string = 'light';
   public menu = [
     {
@@ -16,7 +17,10 @@ export default class Window {
       items: [
         {
           name: 'Close',
-          action: this.close
+          action: (window: WindowInterface) => {
+            const { close } = this;
+            close(window);
+          }
         }
       ]
     }
@@ -32,8 +36,8 @@ export default class Window {
       if (w.y === this.y) this.y += 20;
     });
   }
-  public close() {
-    store.commit('wm/closeWindow', this.id);
+  public close(window: WindowInterface) {
+    store.commit('wm/closeWindow', window);
   }
   public maximize() {
     store.commit('wm/updateWindow', { window: this });

@@ -20,7 +20,7 @@
             icon="lens"
             size="8.5px"
             color="red"
-            @click="close()"
+            @click="window.close(window)"
           />
           <q-btn dense flat round icon="lens" size="8.5px" color="yellow" />
           <q-btn
@@ -47,6 +47,7 @@
                     v-close-popup
                     v-for="(item, itemIndex) in menu.items"
                     v-bind:key="`item${itemIndex}`"
+                    @click="item.action(window)"
                   >
                     <q-item-section>{{ item.name }}</q-item-section>
                   </q-item>

@@ -1,11 +1,16 @@
 <template>
-  <div class="blurred-bg" />
+  <div class="blurred-bg" :style="`background: ${color}`" />
 </template>
 <script lang="ts">
 import { defineComponent } from '@vue/composition-api';
 export default defineComponent({
   name: 'BlurredBG',
-  setup() {}
+  props: {
+    color: {
+      type: String,
+      default: 'rgba(0,0,0,0.3)'
+    }
+  }
 });
 </script>
 <style scoped>
@@ -15,7 +20,6 @@ export default defineComponent({
   top: 0;
   right: 0;
   bottom: 0;
-  background: rgba(0, 0, 0, 0.3);
   backdrop-filter: blur(30px);
 }
 </style>

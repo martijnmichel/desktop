@@ -4,6 +4,7 @@ import Vuex from 'vuex';
 import Vue from 'vue';
 
 import wm from './wm';
+import dm from './dm';
 
 // import example from './module-example'
 // import exampleState from './module-example/state'
@@ -28,7 +29,8 @@ Vue.use(Vuex);
 const Store = new Vuex.Store({
   modules: {
     // example
-    wm
+    wm,
+    dm
   },
 
   // enable strict mode (adds overhead!)

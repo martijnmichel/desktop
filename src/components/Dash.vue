@@ -1,11 +1,12 @@
 <template>
-  <q-btn
+  <q-img
     flat
     dense
     round
-    icon="menu"
+    src="statics/dash.png"
     @click="state.dash = true"
     aria-label="Menu"
+    class="navIcon"
   >
     <q-dialog
       maximized
@@ -45,7 +46,7 @@
         </q-card-section>
       </q-card>
     </q-dialog>
-  </q-btn>
+  </q-img>
 </template>
 
 <script lang="ts">

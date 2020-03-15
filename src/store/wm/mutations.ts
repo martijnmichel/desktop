@@ -1,17 +1,18 @@
 import { WindowInterface } from 'src/interfaces/Window';
-export function addWindow(state: any, event: WindowInterface) {
+import { State } from 'src/store/wm/interface';
+export function addWindow(state: State, event: WindowInterface) {
   if (!event) event = {};
 
   state.windows.push(event);
 }
 
-export function closeWindow(state: any, id: string) {
-  const i = state.windows.findIndex(w => w.id === id);
+export function closeWindow(state: State, window: WindowInterface) {
+  const i = state.windows.findIndex((w: WindowInterface) => w.id === window.id);
   state.windows.splice(i, 1);
 }
 
 export function updateWindow(
-  state: any,
+  state: State,
   data: { context: Event; window: WindowInterface }
 ) {
   console.log(data.window);

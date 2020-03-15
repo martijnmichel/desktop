@@ -7,8 +7,8 @@
       seamless
     >
       <div class="bottomNav">
-        <blurred-bg />
-        <q-toolbar dark>
+        <blurred-bg color="rgba(0,0,0,0.6)" />
+        <q-toolbar>
           <Dash />
 
           <template v-for="window in windows">
