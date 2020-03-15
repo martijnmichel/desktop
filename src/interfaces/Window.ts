@@ -1,11 +1,12 @@
 export interface WindowInterface {
-  title: string;
-  id?: number;
-  app?: string;
-  width?: number;
-  height?: number;
-  theme?: string;
-  menu?: object[] | boolean;
-  x?: number;
-  y?: number;
+  id: number;
+  width: number;
+  height: number;
+  theme: string;
+  menu: object[] | boolean;
+  preventMultiple: boolean;
+  x: number;
+  y: number;
+  close: (window: WindowInterface) => void;
+  maximize: (window: WindowInterface) => void;
 }

@@ -5,6 +5,7 @@
     :x="window.x"
     :y="window.y"
     drag-handle=".bar"
+    :on-drag-start="onDragStart"
   >
     <q-card class="window" :id="`window-${window.id}`">
       <div class="row" style="height: inherit">
@@ -64,11 +65,12 @@
 </template>
 
 <script lang="ts">
-import { defineComponent, PropType } from '@vue/composition-api';
-import { WindowInterface } from 'src/interfaces/Window';
+import { defineComponent, PropType, onMounted } from '@vue/composition-api';
+import { AppInterface } from 'src/interfaces/App';
 import store from 'src/store';
 
 import VueDraggableResizable from 'vue-draggable-resizable';
+import _ from 'lodash';
 
 /**
  *
@@ -78,12 +80,34 @@ import VueDraggableResizable from 'vue-draggable-resizable';
  *
  */
 
-function useWindow(window: WindowInterface) {
+function useWindow(window: AppInterface) {
   function close() {
     store.commit('wm/closeWindow', window.id);
   }
 
+  function putOnTop() {
+    const windows = document.querySelectorAll('.window');
+    if (windows) {
+      _.each(windows, (win: Element) =>
+        win.setAttribute('style', 'z-index: unset')
+      );
+    }
+    const element = document.getElementById(`window-${window.id}`);
+    if (element) element.setAttribute('style', 'z-index: 9999');
+  }
+
+  function onDragStart() {
+    putOnTop();
+  }
+
+  onMounted(() => {
+    putOnTop();
+  });
+
   return {
+    putOnTop,
+    onMounted,
+    onDragStart,
     close
   };
 }
@@ -92,7 +116,7 @@ export default defineComponent({
   name: 'Window' as string,
   props: {
     window: {
-      type: Object as PropType<WindowInterface>,
+      type: Object as PropType<AppInterface>,
       required: true
     }
   },

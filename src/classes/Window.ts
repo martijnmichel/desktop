@@ -4,23 +4,23 @@ import store from 'src/store';
 import _ from 'lodash';
 import uniqid from 'uniqid';
 
-export default class Window {
-  protected id: number = uniqid();
-  public width = 640;
-  public height = 480;
-  public x = 10;
-  public y = 10;
-  public theme?: string = 'light';
-  public preventMultiple = false;
-  public menu = [
+export default class Window implements WindowInterface {
+  id = uniqid();
+  width = 640;
+  height = 480;
+  x = 10;
+  y = 10;
+  theme = 'light';
+  preventMultiple = false;
+  menu = [
     {
       name: 'File',
       items: [
         {
           name: 'Close',
-          action: (window: WindowInterface) => {
+          action: () => {
             const { close } = this;
-            close(window);
+            close();
           }
         }
       ]
@@ -42,10 +42,10 @@ export default class Window {
       if (w.y === this.y) this.y += 20;
     });
   }
-  public close(window: WindowInterface) {
-    store.commit('wm/closeWindow', window);
+  close() {
+    store.commit('wm/closeWindow', this);
   }
-  public maximize() {
-    store.commit('wm/updateWindow', { window: this });
+  maximize() {
+    store.commit('wm/updateWindow', this);
   }
 }

@@ -1,5 +1,5 @@
 <template>
-  <q-splitter v-model="state.splitterModel" style="height: 267px">
+  <q-splitter v-model="state.splitterModel">
     <template v-slot:before>
       <div class="q-pa-md">
         <q-tree

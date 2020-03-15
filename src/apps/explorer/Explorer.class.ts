@@ -1,8 +1,8 @@
 import Window from 'src/classes/Window';
 import ExplorerApp from 'src/apps/explorer/Explorer.vue';
 import store from 'src/store';
-import { WindowInterface } from 'src/interfaces/Window';
-export default class Explorer extends Window {
+import { AppInterface } from 'src/interfaces/App';
+export default class Explorer extends Window implements AppInterface {
   public root?: string = '/';
   public static title = 'Explorer';
   public component = ExplorerApp;
@@ -11,7 +11,7 @@ export default class Explorer extends Window {
   public static icon?: string =
     'https://img.icons8.com/color/96/000000/opened-folder.png';
 
-  public constructor(data: WindowInterface) {
+  public constructor(data: AppInterface) {
     super(data);
     console.log(this);
     store.commit('wm/addWindow', this);
