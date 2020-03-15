@@ -81,7 +81,7 @@ import VueDraggableResizable from 'vue-draggable-resizable';
 
 function useWindow(window: WindowInterface) {
   function onDrag(event: Event) {
-    console.log(event);
+    console.log(window);
   }
   function dragend(e: Event) {
     const element = document.getElementById(`window-${window.id}`);

@@ -39,13 +39,7 @@
 </style>
 
 <script lang="ts">
-import {
-  defineComponent,
-  PropType,
-  reactive,
-  ref,
-  computed
-} from '@vue/composition-api';
+import { defineComponent, reactive, computed } from '@vue/composition-api';
 
 import WindowManager from 'src/components/WindowManager.vue';
 import BlurredBg from 'src/components/gfx/BlurredBG.vue';
