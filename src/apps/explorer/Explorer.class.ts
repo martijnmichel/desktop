@@ -1,8 +1,9 @@
 import Window from 'src/classes/Window';
 import ExplorerApp from 'src/apps/explorer/Explorer.vue';
+import store from 'src/store';
 export default class Explorer extends Window {
   public root?: string = '/';
-  public title = 'Explorer';
+  public static title = 'Explorer';
   public component = ExplorerApp;
 
   public static app = 'explorer';
@@ -12,5 +13,6 @@ export default class Explorer extends Window {
   public constructor(data: object) {
     super(data);
     console.log(this);
+    store.commit('wm/addWindow', this);
   }
 }

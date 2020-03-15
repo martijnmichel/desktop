@@ -1,5 +1,14 @@
 <template>
-  <q-layout view="lHh Lpr lFf" id="main">
+  <q-layout
+    view="lHh Lpr lFf"
+    id="main"
+    :style="
+      `
+      background: url('${settings.background}') center center no-repeat;
+      background-size: cover;
+      `
+    "
+  >
     <q-dialog
       v-model="state.bar"
       position="bottom"
@@ -7,7 +16,7 @@
       seamless
     >
       <div class="bottomNav">
-        <blurred-bg color="rgba(0,0,0,0.3)" />
+        <blurred-bg color="rgba(0,0,0,0.5)" />
         <q-toolbar>
           <Dash />
 
@@ -29,7 +38,6 @@
 
 <style scoped>
 #main {
-  background: url('/statics/bg.jpeg') center center no-repeat;
   background-size: cover;
 }
 .bottomNav {
@@ -63,6 +71,7 @@ export default defineComponent({
     });
 
     const windows = computed(() => store.getters['wm/allWindows']);
+    const settings = computed(() => store.getters['dm/allSettings']);
 
     function add() {
       store.commit('wm/addWindow', { app: 'explorer' });
@@ -71,7 +80,8 @@ export default defineComponent({
     return {
       state,
       add,
-      windows
+      windows,
+      settings
     };
   }
 });

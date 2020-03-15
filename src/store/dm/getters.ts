@@ -1,3 +1,3 @@
-export function settings(state: any) {
+export function allSettings(state: any) {
   return state.settings;
 }

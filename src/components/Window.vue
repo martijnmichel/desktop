@@ -7,7 +7,7 @@
     drag-handle=".bar"
   >
     <q-card class="window" :id="`window-${window.id}`">
-      <div class="row">
+      <div class="row" style="height: inherit">
         <div class="col-12">
           <q-bar dense class="bar">
             <q-btn
@@ -27,13 +27,13 @@
               icon="lens"
               size="8.5px"
               color="green"
-              @click="window.maximize()"
+              @click="window.maximize(window)"
             />
             <div class="col text-center text-weight-bold">
-              {{ window.title }}
+              {{ window.constructor.title }}
             </div>
           </q-bar>
-          <q-bar dense class="bg-grey-2">
+          <q-bar dense class="bg-grey-2" v-if="window.menu">
             <template v-for="(menu, index) in window.menu">
               <div class="cursor-pointer non-selectable" v-bind:key="index">
                 {{ menu.name }}
@@ -55,7 +55,7 @@
           </q-bar>
         </div>
 
-        <div class="col-12">
+        <div class="col-12" style="height: calc(100% - 48px); overflow-y: auto">
           <component v-bind:is="window.component" />
         </div>
       </div>

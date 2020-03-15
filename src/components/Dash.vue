@@ -13,12 +13,21 @@
       v-model="state.dash"
       transition-show="fadeIn"
       transition-hide="fadeOut"
-      auto-close
     >
       <q-card flat class="bg-transparent">
         <blurred-bg />
         <q-card-section>
           <q-toolbar>
+            <q-space />
+            <q-input
+              color="white"
+              bg-color="rgba(255,255,255, 0.5)"
+              v-model="state.filter"
+              rounded
+              outlined
+              dark
+              placeholder="Filter applications..."
+            />
             <q-space />
             <q-btn
               @click="state.dash = false"
@@ -33,14 +42,15 @@
         <q-card-section>
           <div class="row justify-center q-gutter-lg">
             <q-btn
-              round
               flat
-              size="48px"
               @click="new app()"
               v-for="app in applications"
               v-bind:key="`app-${app.app}`"
+              stack
+              v-close-popup
             >
               <q-img :src="app.icon" width="96px" height="auto" />
+              <span>{{ app.title }}</span>
             </q-btn>
           </div>
         </q-card-section>
@@ -60,10 +70,16 @@ export default defineComponent({
   components: { BlurredBg },
   setup() {
     const state = reactive({
-      dash: false
+      dash: false,
+      filter: ''
     });
 
-    const applications = computed(() => apps);
+    const applications = computed(() => {
+      const filtered = _.filter(apps, app => {
+        return app.title.toLowerCase().includes(state.filter);
+      });
+      return filtered;
+    });
 
     return { state, applications };
   }

@@ -6,11 +6,12 @@ import uniqid from 'uniqid';
 
 export default class Window {
   protected id: number = uniqid();
-  public width = 480;
-  public height = 320;
+  public width = 640;
+  public height = 480;
   public x = 10;
   public y = 10;
   public theme?: string = 'light';
+  public preventMultiple = false;
   public menu = [
     {
       name: 'File',
@@ -24,7 +25,7 @@ export default class Window {
         }
       ]
     }
-  ];
+  ] as object[] | boolean;
   public constructor(e: WindowInterface = {}) {
     if (e.width) this.width = e.width;
     if (e.height) this.height = e.height;
@@ -32,7 +33,6 @@ export default class Window {
     if (e.y) this.y = e.y;
 
     this.setPosition();
-    store.commit('wm/addWindow', this);
   }
   public setPosition() {
     _.each(store.getters['wm/allWindows'], (w: WindowInterface) => {

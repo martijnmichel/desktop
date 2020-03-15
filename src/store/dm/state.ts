@@ -1,5 +1,5 @@
-export default function() {
-  return {
-    settings: {} as object
-  };
-}
+export default {
+  settings: {
+    background: '/statics/bg1.jpeg'
+  } as object
+};

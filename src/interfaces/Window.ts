@@ -5,6 +5,7 @@ export interface WindowInterface {
   width?: number;
   height?: number;
   theme?: string;
+  menu?: object[] | boolean;
   x?: number;
   y?: number;
 }
