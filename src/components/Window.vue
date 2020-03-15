@@ -93,7 +93,7 @@ export default defineComponent({
   props: {
     window: {
       type: Object as PropType<WindowInterface>,
-      default: {}
+      required: true
     }
   },
   components: {

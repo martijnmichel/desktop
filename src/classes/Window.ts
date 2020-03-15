@@ -26,11 +26,13 @@ export default class Window {
       ]
     }
   ] as object[] | boolean;
-  public constructor(e: WindowInterface = {}) {
-    if (e.width) this.width = e.width;
-    if (e.height) this.height = e.height;
-    if (e.x) this.x = e.x;
-    if (e.y) this.y = e.y;
+  public constructor(e: WindowInterface) {
+    if (e) {
+      if (e.width) this.width = e.width;
+      if (e.height) this.height = e.height;
+      if (e.x) this.x = e.x;
+      if (e.y) this.y = e.y;
+    }
 
     this.setPosition();
   }

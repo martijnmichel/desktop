@@ -62,6 +62,7 @@
 <script lang="ts">
 import { defineComponent, reactive, computed } from '@vue/composition-api';
 import BlurredBg from 'src/components/gfx/BlurredBG.vue';
+import { WindowInterface } from 'src/interfaces/Window';
 import apps from 'src/apps';
 
 import _ from 'lodash';
@@ -75,7 +76,7 @@ export default defineComponent({
     });
 
     const applications = computed(() => {
-      const filtered = _.filter(apps, app => {
+      const filtered = _.filter(apps, (app: WindowInterface) => {
         return app.title.toLowerCase().includes(state.filter);
       });
       return filtered;

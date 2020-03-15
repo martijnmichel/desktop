@@ -1,5 +1,5 @@
 export interface WindowInterface {
-  title?: string;
+  title: string;
   id?: number;
   app?: string;
   width?: number;
