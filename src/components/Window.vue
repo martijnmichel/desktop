@@ -1,6 +1,5 @@
 <template>
   <vue-draggable-resizable
-    @dragging="onDrag"
     :w="window.width"
     :h="window.height"
     :x="window.x"
@@ -80,25 +79,11 @@ import VueDraggableResizable from 'vue-draggable-resizable';
  */
 
 function useWindow(window: WindowInterface) {
-  function onDrag(event: Event) {
-    console.log(window);
-  }
-  function dragend(e: Event) {
-    const element = document.getElementById(`window-${window.id}`);
-    if (element) element.removeAttribute('draggable');
-    store.commit('wm/updateWindow', {
-      window: window,
-      context: e
-    });
-  }
-
   function close() {
     store.commit('wm/closeWindow', window.id);
   }
 
   return {
-    onDrag,
-    dragend,
     close
   };
 }

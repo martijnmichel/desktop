@@ -3,9 +3,9 @@
   height: 36px;
   width: 36px;
   cursor: pointer;
-  transition: all 0.7s ease-in;
+  transition: all 0.3s ease-in;
   &:hover {
-    transition: scaleX(120%) scaleY(120%);
+    transform: scale(1.2);
     transform-origin: center bottom;
   }
 }

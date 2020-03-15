@@ -7,13 +7,13 @@
       seamless
     >
       <div class="bottomNav">
-        <blurred-bg color="rgba(0,0,0,0.6)" />
+        <blurred-bg color="rgba(0,0,0,0.3)" />
         <q-toolbar>
           <Dash />
 
           <template v-for="window in windows">
             <q-avatar rounded v-bind:key="window.id">
-              <q-img :src="window.icon" />
+              <q-img :src="window.constructor.icon" class="navIcon" />
             </q-avatar>
           </template>
         </q-toolbar>
