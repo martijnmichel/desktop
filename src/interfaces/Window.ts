@@ -5,8 +5,11 @@ export interface WindowInterface {
   theme: string;
   menu: object[] | boolean;
   preventMultiple: boolean;
+  show: boolean;
+  open: boolean;
   x: number;
   y: number;
-  close: (window: WindowInterface) => void;
-  maximize: (window: WindowInterface) => void;
+  close: () => void;
+  minimize: () => void;
+  maximize: () => void;
 }

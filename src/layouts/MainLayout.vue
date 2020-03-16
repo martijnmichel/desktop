@@ -22,7 +22,11 @@
 
           <template v-for="window in windows">
             <q-avatar rounded v-bind:key="window.id">
-              <q-img :src="window.constructor.icon" class="navIcon" />
+              <q-img
+                :src="window.constructor.icon"
+                @click="!window.show ? window.restore() : null"
+                class="navIcon"
+              />
             </q-avatar>
           </template>
         </q-toolbar>

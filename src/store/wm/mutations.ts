@@ -6,7 +6,19 @@ export function addWindow(state: State, event: AppInterface) {
 
 export function closeWindow(state: State, window: AppInterface) {
   const i = state.windows.findIndex((w: AppInterface) => w.id === window.id);
+  state.windows[i].open = false;
+  state.windows[i].show = false;
   state.windows.splice(i, 1);
+}
+
+export function minimizeWindow(state: State, window: AppInterface) {
+  const i = state.windows.findIndex((w: AppInterface) => w.id === window.id);
+  state.windows[i].show = false;
+}
+
+export function restoreWindow(state: State, window: AppInterface) {
+  const i = state.windows.findIndex((w: AppInterface) => w.id === window.id);
+  state.windows[i].show = true;
 }
 
 export function updateWindow(
@@ -18,4 +30,8 @@ export function updateWindow(
     (w: AppInterface) => w.id === data.window.id
   );
   state.windows[i] = data.window;
+}
+
+export function updateSettings(state: State, data: State) {
+  Object.assign(state.settings, data);
 }

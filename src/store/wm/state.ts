@@ -1,5 +1,11 @@
 export default function() {
   return {
-    windows: []
+    windows: [],
+    settings: {
+      transitions: {
+        enter: 'animated zoomInUp faster',
+        leave: 'animated zoomOutDown faster'
+      }
+    }
   };
 }

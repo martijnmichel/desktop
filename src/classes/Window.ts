@@ -12,6 +12,8 @@ export default class Window implements WindowInterface {
   y = 10;
   theme = 'light';
   preventMultiple = false;
+  show = true;
+  open = true;
   menu = [
     {
       name: 'File',
@@ -44,6 +46,12 @@ export default class Window implements WindowInterface {
   }
   close() {
     store.commit('wm/closeWindow', this);
+  }
+  minimize() {
+    store.commit('wm/minimizeWindow', this);
+  }
+  restore() {
+    store.commit('wm/restoreWindow', this);
   }
   maximize() {
     store.commit('wm/updateWindow', this);

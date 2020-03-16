@@ -44,6 +44,11 @@ export default defineComponent({
           name: 'Sound',
           component: SoundSettings,
           icon: 'https://img.icons8.com/color/96/000000/room-sound.png'
+        },
+        {
+          name: 'Windows',
+          component: () => import('./WindowSettings.vue'),
+          icon: 'https://img.icons8.com/color/96/000000/browser-window.png'
         }
       ]
     });
