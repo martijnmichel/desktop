@@ -2,7 +2,7 @@ import { AppInterface } from 'src/interfaces/App';
 export interface State {
   windows: AppInterface[];
   settings: {
-    interface: {
+    transitions: {
       enter: string;
       leave: string;
     };

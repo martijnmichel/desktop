@@ -44,6 +44,9 @@ export default class Window implements WindowInterface {
       if (w.y === this.y) this.y += 20;
     });
   }
+  updatePosition(x: number, y: number) {
+    store.commit('wm/updatePosition', { window: this, x, y });
+  }
   close() {
     store.commit('wm/closeWindow', this);
   }

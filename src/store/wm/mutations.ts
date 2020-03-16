@@ -1,5 +1,7 @@
 import { AppInterface } from 'src/interfaces/App';
 import { State } from 'src/store/wm/interface';
+import Vue from 'vue';
+import _ from 'lodash';
 export function addWindow(state: State, event: AppInterface) {
   if (event) state.windows.push(event);
 }
@@ -21,17 +23,30 @@ export function restoreWindow(state: State, window: AppInterface) {
   state.windows[i].show = true;
 }
 
+export function updatePosition(
+  state: State,
+  event: { window: AppInterface; x: number; y: number }
+) {
+  const i = state.windows.findIndex(
+    (w: AppInterface) => w.id === event.window.id
+  );
+  state.windows[i].x = event.x;
+  state.windows[i].y = event.y;
+}
+
 export function updateWindow(
   state: State,
   data: { context: Event; window: AppInterface }
 ) {
-  console.log(data.window);
   const i = state.windows.findIndex(
     (w: AppInterface) => w.id === data.window.id
   );
   state.windows[i] = data.window;
 }
 
-export function updateSettings(state: State, data: State) {
-  Object.assign(state.settings, data);
+export function setTransitions(
+  state: State,
+  data: { enter: string; leave: string }
+) {
+  state.settings.transitions = data;
 }

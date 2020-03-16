@@ -3,8 +3,8 @@ export default function() {
     windows: [],
     settings: {
       transitions: {
-        enter: 'animated zoomInUp faster',
-        leave: 'animated zoomOutDown faster'
+        enter: 'zoomInUp',
+        leave: 'zoomOutDown'
       }
     }
   };

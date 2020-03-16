@@ -12,15 +12,9 @@
           <q-select
             rounded
             outlined
-            :options="transitions"
+            :options="transitions.enter"
             v-model="settings.transition.enter"
-            @input="
-              store.commit('wm/updateSettings', {
-                transitions: {
-                  enter: `animated ${settings.transition.enter} faster`
-                }
-              })
-            "
+            @input="store.commit('wm/setTransitions', settings.transition)"
           />
         </q-item-section>
       </q-item>
@@ -32,15 +26,9 @@
           <q-select
             rounded
             outlined
-            :options="transitions"
+            :options="transitions.leave"
             v-model="settings.transition.leave"
-            @input="
-              store.commit('wm/updateSettings', {
-                transitions: {
-                  leave: `animated ${settings.transition.leave} faster`
-                }
-              })
-            "
+            @input="store.commit('wm/setTransitions', settings.transition)"
           />
         </q-item-section>
       </q-item>
@@ -57,23 +45,37 @@ export default defineComponent({
   setup() {
     const settings = reactive({
       transition: {
-        enter: '',
-        leave: ''
+        enter: store.getters['wm/allSettings'].transitions.enter,
+        leave: store.getters['wm/allSettings'].transitions.leave
       }
     });
 
-    const transitions = [
-      'bounceIn',
-      'bounceInUp',
-      'bounceInDown',
-      'bounceInLeft',
-      'bounceInRight',
-      'bounceOut',
-      'bounceOutUp',
-      'bounceOutDown',
-      'bounceOutRight',
-      'bounceOutLeft'
-    ];
+    const transitions = {
+      enter: [
+        'bounceIn',
+        'bounceInUp',
+        'bounceInDown',
+        'bounceInLeft',
+        'bounceInRight',
+        'zoomIn',
+        'zoomInUp',
+        'zoomInDown',
+        'zoomInLeft',
+        'zoomInRight'
+      ],
+      leave: [
+        'bounceOut',
+        'bounceOutUp',
+        'bounceOutDown',
+        'bounceOutRight',
+        'bounceOutLeft',
+        'zoomOut',
+        'zoomOutUp',
+        'zoomOutDown',
+        'zoomOutRight',
+        'zoomOutLeft'
+      ]
+    };
 
     return {
       settings,

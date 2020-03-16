@@ -12,4 +12,5 @@ export interface WindowInterface {
   close: () => void;
   minimize: () => void;
   maximize: () => void;
+  updatePosition: (x: number, y: number) => void;
 }

@@ -2,9 +2,9 @@
   <transition
     name="custom-classes-transition"
     appear
-    :appear-active-class="transitions.enter"
-    :enter-active-class="transitions.enter"
-    :leave-active-class="transitions.leave"
+    :appear-active-class="`animated ${transitions.enter} faster`"
+    :enter-active-class="`animated ${transitions.enter} faster`"
+    :leave-active-class="`animated ${transitions.leave} faster`"
     v-if="window.show"
   >
     <vue-draggable-resizable
@@ -14,6 +14,7 @@
       :y="window.y"
       drag-handle=".bar"
       :on-drag-start="onDragStart"
+      @dragstop="onDragStop"
     >
       <q-card class="window" :id="`window-${window.id}`">
         <div class="row" style="height: inherit">
@@ -122,6 +123,10 @@ function useWindow(window: AppInterface) {
     putOnTop();
   }
 
+  function onDragStop(x: number, y: number) {
+    window.updatePosition(x, y);
+  }
+
   onMounted(() => {
     putOnTop();
   });
@@ -135,7 +140,8 @@ function useWindow(window: AppInterface) {
     putOnTop,
     onMounted,
     onDragStart,
-    transitions
+    transitions,
+    onDragStop
   };
 }
 
