@@ -4,10 +4,10 @@
       <q-btn dense icon="add" color="primary">
         <q-menu dense auto-close>
           <q-list>
-            <q-item clickable @click="w.to('add:bookmark')">
+            <q-item clickable @click="context.to('add:bookmark')">
               <q-item-section>Bookmark</q-item-section>
             </q-item>
-            <q-item clickable @click="w.to('add:group')">
+            <q-item clickable @click="context.to('add:group')">
               <q-item-section>Group</q-item-section>
             </q-item>
           </q-list>
@@ -32,7 +32,7 @@ import { AppInterface } from 'src/interfaces/App';
 export default defineComponent({
   name: 'BookieMain' as string,
   props: {
-    w: {
+    context: {
       type: Object as PropType<AppInterface>,
       required: true
     }

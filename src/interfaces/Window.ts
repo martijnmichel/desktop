@@ -16,7 +16,7 @@ export interface RouteInterface {
   component: () => void;
 }
 export interface WindowInterface {
-  id: number;
+  id: string;
   width: number;
   height: number;
   theme: string;

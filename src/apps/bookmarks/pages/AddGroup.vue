@@ -1,7 +1,7 @@
 <template>
   <div>
     <q-toolbar>
-      <q-btn @click="w.to('')" flat round icon="chevron_left" />
+      <q-btn @click="context.to('')" flat round icon="chevron_left" />
       <q-toolbar-title>
         Add group
       </q-toolbar-title>
@@ -26,7 +26,7 @@ import uniqid from 'uniqid';
 export default defineComponent({
   name: 'AddGroup' as string,
   props: {
-    w: {
+    context: {
       type: Object as PropType<AppInterface>,
       required: true
     }
@@ -55,7 +55,7 @@ export default defineComponent({
         bookie.push(new Group(name.value));
       }
       ctx.root.$q.localStorage.set('desktop:app:bookie', bookie);
-      w.to('');
+      props.context.to('');
     }
     return { name, save };
   }

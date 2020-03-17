@@ -57,7 +57,7 @@
           </div>
 
           <div class="col-12" style="height: 100%; overflow-y: auto">
-            <component v-bind:is="window.component" />
+            <component v-bind:is="window.component" :context="window" />
           </div>
         </div>
       </q-card>
