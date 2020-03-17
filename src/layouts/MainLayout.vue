@@ -33,6 +33,8 @@
       </div>
     </q-dialog>
 
+    <system-bar />
+
     <q-page-container>
       <router-view />
       <window-manager />
@@ -54,6 +56,7 @@
 import { defineComponent, reactive, computed } from '@vue/composition-api';
 
 import WindowManager from 'src/components/WindowManager.vue';
+import SystemBar from 'src/components/SystemBar.vue';
 import BlurredBg from 'src/components/gfx/BlurredBG.vue';
 import Dash from 'src/components/Dash.vue';
 
@@ -64,6 +67,7 @@ export default defineComponent({
 
   components: {
     WindowManager,
+    SystemBar,
     BlurredBg,
     Dash
   },

@@ -6,8 +6,8 @@ export default class Explorer extends Window implements AppInterface {
   public root?: string = '/';
   public static title = 'Explorer';
   public component = ExplorerApp;
-
   public static app = 'explorer';
+  menu = false;
   public static icon?: string =
     'https://img.icons8.com/color/96/000000/opened-folder.png';
 

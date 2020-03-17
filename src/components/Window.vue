@@ -5,16 +5,19 @@
     :appear-active-class="`animated ${transitions.enter} faster`"
     :enter-active-class="`animated ${transitions.enter} faster`"
     :leave-active-class="`animated ${transitions.leave} faster`"
-    v-if="window.show"
+    v-if="window.open"
   >
     <vue-draggable-resizable
       :w="window.width"
       :h="window.height"
       :x="window.x"
       :y="window.y"
+      :resizable="window.resizable"
       drag-handle=".bar"
       :on-drag-start="onDragStart"
       @dragstop="onDragStop"
+      @resizestop="onResizeStop"
+      :z="window.active ? 999 : 1"
     >
       <q-card class="window" :id="`window-${window.id}`">
         <div class="row" style="height: inherit">
@@ -51,32 +54,9 @@
                 {{ window.constructor.title }}
               </div>
             </q-bar>
-            <q-bar dense class="bg-grey-2" v-if="window.menu">
-              <template v-for="(menu, index) in window.menu">
-                <div class="cursor-pointer non-selectable" v-bind:key="index">
-                  {{ menu.name }}
-                  <q-menu>
-                    <q-list dense>
-                      <q-item
-                        clickable
-                        v-close-popup
-                        v-for="(item, itemIndex) in menu.items"
-                        v-bind:key="`item${itemIndex}`"
-                        @click="item.action(window)"
-                      >
-                        <q-item-section>{{ item.name }}</q-item-section>
-                      </q-item>
-                    </q-list>
-                  </q-menu>
-                </div>
-              </template>
-            </q-bar>
           </div>
 
-          <div
-            class="col-12"
-            style="height: calc(100% - 48px); overflow-y: auto"
-          >
+          <div class="col-12" style="height: 100%; overflow-y: auto">
             <component v-bind:is="window.component" />
           </div>
         </div>
@@ -108,27 +88,25 @@ import _ from 'lodash';
  */
 
 function useWindow(window: AppInterface) {
-  function putOnTop() {
-    const windows = document.querySelectorAll('.window');
-    if (windows) {
-      _.each(windows, (win: Element) =>
-        win.setAttribute('style', 'z-index: unset')
-      );
-    }
-    const element = document.getElementById(`window-${window.id}`);
-    if (element) element.setAttribute('style', 'z-index: 9999');
-  }
-
   function onDragStart() {
-    putOnTop();
+    if (!window.active) window.setActive();
   }
 
   function onDragStop(x: number, y: number) {
     window.updatePosition(x, y);
   }
 
+  function onResizeStop(
+    top: number,
+    left: number,
+    width: number,
+    height: number
+  ) {
+    window.updateDimensions(width, height);
+  }
+
   onMounted(() => {
-    putOnTop();
+    window.setActive();
   });
 
   const transitions = computed(() => {
@@ -137,11 +115,11 @@ function useWindow(window: AppInterface) {
   });
 
   return {
-    putOnTop,
     onMounted,
     onDragStart,
     transitions,
-    onDragStop
+    onDragStop,
+    onResizeStop
   };
 }
 
@@ -168,6 +146,10 @@ export default defineComponent({
   width: 100%;
   height: 100%;
   overflow: hidden;
+}
+
+.active-window {
+  z-index: 999;
 }
 
 .vdr {

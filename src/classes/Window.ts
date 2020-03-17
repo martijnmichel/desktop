@@ -1,19 +1,25 @@
-import { WindowInterface } from 'src/interfaces/Window';
+import { WindowInterface, MenuEntryInterface } from 'src/interfaces/Window';
 
 import store from 'src/store';
 import _ from 'lodash';
 import uniqid from 'uniqid';
+import { AppInterface } from 'src/interfaces/App';
 
 export default class Window implements WindowInterface {
   id = uniqid();
   width = 640;
   height = 480;
   x = 10;
-  y = 10;
+  y = 40;
   theme = 'light';
   preventMultiple = false;
-  show = true;
+  active = true;
+  running = true;
   open = true;
+  route = {
+    current: '',
+    previous: ''
+  };
   menu = [
     {
       name: 'File',
@@ -22,13 +28,13 @@ export default class Window implements WindowInterface {
           name: 'Close',
           action: () => {
             const { close } = this;
-            close();
+            close(this);
           }
         }
       ]
     }
-  ] as object[] | boolean;
-  public constructor(e: WindowInterface) {
+  ] as MenuEntryInterface[] | boolean;
+  public constructor(e: AppInterface) {
     if (e) {
       if (e.width) this.width = e.width;
       if (e.height) this.height = e.height;
@@ -39,7 +45,7 @@ export default class Window implements WindowInterface {
     this.setPosition();
   }
   public setPosition() {
-    _.each(store.getters['wm/allWindows'], (w: WindowInterface) => {
+    _.each(store.getters['wm/allWindows'], (w: AppInterface) => {
       if (w.x === this.x) this.x += 20;
       if (w.y === this.y) this.y += 20;
     });
@@ -47,8 +53,16 @@ export default class Window implements WindowInterface {
   updatePosition(x: number, y: number) {
     store.commit('wm/updatePosition', { window: this, x, y });
   }
-  close() {
-    store.commit('wm/closeWindow', this);
+  updateDimensions(width: number, height: number) {
+    store.commit('wm/updateDimensions', { window: this, width, height });
+  }
+  setActive() {
+    store.commit('wm/setActiveWindow', this);
+  }
+  close(window: WindowInterface) {
+    let w = window;
+    if (!window) w = this;
+    store.commit('wm/closeWindow', w);
   }
   minimize() {
     store.commit('wm/minimizeWindow', this);
@@ -58,5 +72,8 @@ export default class Window implements WindowInterface {
   }
   maximize() {
     store.commit('wm/updateWindow', this);
+  }
+  public to(route: string) {
+    store.commit('wm/updateRoute', { window: this, route: route });
   }
 }

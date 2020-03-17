@@ -7,7 +7,7 @@ export default class Settings extends Window implements AppInterface {
   public component = SettingsApp;
   public menu = false;
   public preventMultiple = true;
-
+  resizable = false;
   public static app = 'settings';
   public static icon?: string =
     'https://img.icons8.com/color/100/000000/sorting-options.png';

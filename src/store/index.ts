@@ -3,6 +3,8 @@ import { VueConstructor } from 'vue';
 import Vuex from 'vuex';
 import Vue from 'vue';
 
+import { AppInterface } from 'src/interfaces/App';
+
 import wm from './wm';
 import dm from './dm';
 
@@ -21,7 +23,20 @@ type StoreBootParams = {
 export interface StoreInterface {
   // Define your own store structure, using submodules if needed
   // example: typeof exampleState;
-  example: unknown;
+  wm: {
+    windows: AppInterface[];
+    settings: {
+      transitions: {
+        enter: string;
+        leave: string;
+      };
+    };
+  };
+  dm: {
+    settings: {
+      background: string;
+    };
+  };
 }
 
 Vue.use(Vuex);
