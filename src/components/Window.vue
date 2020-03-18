@@ -77,7 +77,6 @@ import { AppInterface } from 'src/interfaces/App';
 import store from 'src/store';
 
 import VueDraggableResizable from 'vue-draggable-resizable';
-import _ from 'lodash';
 
 /**
  *

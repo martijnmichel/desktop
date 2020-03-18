@@ -1,5 +1,4 @@
 import { AppInterface } from './App';
-import { ComponentInstance } from '@vue/composition-api/dist/component';
 
 export interface MenuItemInterface {
   name?: string;

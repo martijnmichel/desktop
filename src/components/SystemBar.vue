@@ -70,12 +70,7 @@
 </template>
 
 <script lang="ts">
-import {
-  defineComponent,
-  computed,
-  ref,
-  onMounted
-} from '@vue/composition-api';
+import { defineComponent, computed } from '@vue/composition-api';
 import store from 'src/store';
 import _ from 'lodash';
 import { AppInterface } from '../interfaces/App';
@@ -83,21 +78,12 @@ import { AppInterface } from '../interfaces/App';
 export default defineComponent({
   name: '',
   setup() {
-    let perc = ref(0);
-
-    onMounted(async () => {
-      await navigator.getBattery().then(function(battery) {
-        perc = battery.level;
-        console.log(perc);
-      });
-    });
-
     const window = computed(() => {
       return _.find(store.getters['wm/allWindows'], (w: AppInterface) => {
         return w.active === true;
       });
     });
-    return { window, perc, onMounted };
+    return { window };
   }
 });
 </script>

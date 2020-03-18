@@ -3,7 +3,6 @@ import BookmarksApp from 'src/apps/bookmarks/Bookmarks.vue';
 import { MenuEntryInterface } from 'src/interfaces/Window';
 import store from 'src/store';
 import { AppInterface } from 'src/interfaces/App';
-import { LocalStorage } from 'quasar';
 export default class Bookmarks extends Window implements AppInterface {
   public static title = 'Bookie';
   public component = BookmarksApp;

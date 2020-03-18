@@ -4,7 +4,6 @@
 <script lang="ts">
 import { defineComponent, PropType, computed } from '@vue/composition-api';
 import { AppInterface } from 'src/interfaces/App';
-import store from 'src/store';
 import _ from 'lodash';
 import { RouteInterface } from '../../interfaces/Window';
 export default defineComponent({
