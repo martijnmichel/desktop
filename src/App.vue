@@ -16,10 +16,7 @@ export default defineComponent({
       if (state) store.commit('dm/init', state);
     });
     watch(() => {
-      context.root.$q.localStorage.set(
-        'desktop:state',
-        context.root.$store.state
-      );
+      context.root.$q.localStorage.set('desktop:state', store.state);
     });
   }
 });
