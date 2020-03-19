@@ -1,11 +1,11 @@
 // import something here
-import * as firebase from 'firebase';
+import firebase from 'firebase/app';
 // "async" is optional
 export default () => {
   // something to do
 
   const firebaseConfig = {
-    apiKey: 'AIzaSyC6uGjJscr-b7Tn3aIbjCDwPMSbwBnlbC8',
+    apiKey: process.env.FIREBASE_API,
     authDomain: 'dskt-f50eb.firebaseapp.com',
     databaseURL: 'https://dskt-f50eb.firebaseio.com',
     projectId: 'dskt-f50eb',

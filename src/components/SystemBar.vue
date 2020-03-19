@@ -4,7 +4,7 @@
   >
     <q-btn dense flat icon="desktop_mac" />
     <div class="text-weight-bold">
-      Dtop
+      DsKT
     </div>
 
     <template v-if="window">
