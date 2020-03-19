@@ -133,12 +133,12 @@ export default defineComponent({
   components: {
     VueDraggableResizable
   },
-  setup({ window }, ctx) {
-    ctx.root.$nextTick(() => {
-      ctx.root.$emit('window:data', window);
+  setup({ ctx }, context) {
+    context.root.$nextTick(() => {
+      context.root.$emit('window:data', ctx);
     });
 
-    return { ...useWindow(window) };
+    return { ...useWindow(ctx) };
   }
 });
 </script>
