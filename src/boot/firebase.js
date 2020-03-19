@@ -5,6 +5,8 @@ import 'firebase/analytics';
 export default () => {
   // something to do
 
+  console.log(process.env);
+
   const firebaseConfig = {
     apiKey: process.env.FIREBASE_API,
     authDomain: 'dskt-f50eb.firebaseapp.com',

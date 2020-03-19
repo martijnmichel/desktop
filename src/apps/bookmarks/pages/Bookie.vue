@@ -14,25 +14,36 @@
         </q-menu>
       </q-btn>
     </q-toolbar>
-    <q-expansion-item
-      v-for="(group, index) in bookie"
-      :key="index"
-      :label="group.name"
-    >
-      <span v-if="!group.bookmarks">
-        No bookmarks yet, go add some...
-      </span>
-    </q-expansion-item>
+    <template v-if="bookie">
+      <q-expansion-item
+        v-for="(group, index) in bookie"
+        :key="index"
+        :label="group.name"
+      >
+        <span v-if="!group.bookmarks">
+          No bookmarks yet, go add some...
+        </span>
+      </q-expansion-item>
+    </template>
   </q-list>
 </template>
 
 <script lang="ts">
-import { defineComponent } from '@vue/composition-api';
+import { defineComponent, ref, PropType } from '@vue/composition-api';
+import { AppInterface } from 'src/interfaces/App';
 export default defineComponent({
+  props: {
+    ctx: {
+      type: Object as PropType<AppInterface>,
+      required: true
+    }
+  },
   setup(props, ctx) {
-    const bookie: object[] | null = ctx.root.$q.localStorage.getItem(
+    const bookmarks: object[] | null = ctx.root.$q.localStorage.getItem(
       'desktop:app:bookie'
     );
+
+    const bookie = ref(bookmarks);
     return { bookie };
   }
 });

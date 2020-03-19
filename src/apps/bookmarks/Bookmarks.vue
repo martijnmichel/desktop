@@ -1,5 +1,5 @@
 <template>
-  <component :is="route" v-if="route" :context="state.app" />
+  <component :is="route" v-if="route" :ctx="state.app" />
 </template>
 <script lang="ts">
 import { defineComponent, reactive, computed } from '@vue/composition-api';
