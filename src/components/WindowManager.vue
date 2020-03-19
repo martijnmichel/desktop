@@ -1,7 +1,7 @@
 <template>
   <div id="wm_wrapper">
-    <template v-for="window in windows">
-      <window v-bind:key="window.id" :window="window" />
+    <template v-for="ctx in windows">
+      <window v-bind:key="ctx.id" :ctx="ctx" />
     </template>
   </div>
 </template>

@@ -5,21 +5,21 @@
     :appear-active-class="`animated ${transitions.enter} faster`"
     :enter-active-class="`animated ${transitions.enter} faster`"
     :leave-active-class="`animated ${transitions.leave} faster`"
-    v-if="window.open"
+    v-if="ctx.open"
   >
     <vue-draggable-resizable
-      :w="window.width"
-      :h="window.height"
-      :x="window.x"
-      :y="window.y"
-      :resizable="window.resizable"
+      :w="ctx.width"
+      :h="ctx.height"
+      :x="ctx.x"
+      :y="ctx.y"
+      :resizable="ctx.resizable"
       drag-handle=".bar"
       :on-drag-start="onDragStart"
       @dragstop="onDragStop"
       @resizestop="onResizeStop"
-      :z="window.active ? 999 : 1"
+      :z="ctx.active ? 999 : 1"
     >
-      <q-card class="window" :id="`window-${window.id}`">
+      <q-card class="window" :id="`window-${ctx.id}`">
         <div class="row" style="height: inherit">
           <div class="col-12">
             <q-bar dense class="bar">
@@ -30,14 +30,14 @@
                 icon="lens"
                 size="8.5px"
                 color="red"
-                @click="window.close()"
+                @click="ctx.close()"
               />
               <q-btn
                 dense
                 flat
                 round
                 icon="lens"
-                @click="window.minimize()"
+                @click="ctx.minimize()"
                 size="8.5px"
                 color="yellow"
               />
@@ -48,16 +48,16 @@
                 icon="lens"
                 size="8.5px"
                 color="green"
-                @click="window.maximize()"
+                @click="ctx.maximize()"
               />
               <div class="col text-center text-weight-bold">
-                {{ window.constructor.title }}
+                {{ ctx.constructor.title }}
               </div>
             </q-bar>
           </div>
 
           <div class="col-12" style="height: 100%; overflow-y: auto">
-            <component v-bind:is="window.component" :context="window" />
+            <component v-bind:is="ctx.component" :ctx="ctx" />
           </div>
         </div>
       </q-card>
@@ -86,13 +86,13 @@ import VueDraggableResizable from 'vue-draggable-resizable';
  *
  */
 
-function useWindow(window: AppInterface) {
+function useWindow(ctx: AppInterface) {
   function onDragStart() {
-    if (!window.active) window.setActive();
+    if (!ctx.active) ctx.setActive();
   }
 
   function onDragStop(x: number, y: number) {
-    window.updatePosition(x, y);
+    ctx.updatePosition(x, y);
   }
 
   function onResizeStop(
@@ -101,11 +101,11 @@ function useWindow(window: AppInterface) {
     width: number,
     height: number
   ) {
-    window.updateDimensions(width, height);
+    ctx.updateDimensions(width, height);
   }
 
   onMounted(() => {
-    window.setActive();
+    ctx.setActive();
   });
 
   const transitions = computed(() => {
@@ -125,7 +125,7 @@ function useWindow(window: AppInterface) {
 export default defineComponent({
   name: 'Window' as string,
   props: {
-    window: {
+    ctx: {
       type: Object as PropType<AppInterface>,
       required: true
     }
@@ -133,8 +133,8 @@ export default defineComponent({
   components: {
     VueDraggableResizable
   },
-  setup({ window }) {
-    return { ...useWindow(window) };
+  setup({ ctx }) {
+    return { ...useWindow(ctx) };
   }
 });
 </script>

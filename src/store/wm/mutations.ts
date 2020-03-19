@@ -10,7 +10,9 @@ export function init(state: State, event: StoreInterface) {
 }
 
 export function addWindow(state: State, event: AppInterface) {
-  if (event) state.windows.push(event);
+  if (event) {
+    state.windows.push(event);
+  }
 }
 
 export function closeWindow(state: State, window: AppInterface) {
