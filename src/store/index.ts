@@ -41,7 +41,7 @@ export interface StoreInterface {
 
 Vue.use(Vuex);
 
-const Store = new Vuex.Store({
+const Store = new Vuex.Store<StoreInterface>({
   modules: {
     // example
     wm,

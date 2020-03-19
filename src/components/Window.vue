@@ -57,7 +57,7 @@
           </div>
 
           <div class="col-12" style="height: 100%; overflow-y: auto">
-            <component v-bind:is="ctx.component" :ctx="ctx" />
+            <component v-bind:is="window.component" />
           </div>
         </div>
       </q-card>
@@ -133,8 +133,12 @@ export default defineComponent({
   components: {
     VueDraggableResizable
   },
-  setup({ ctx }) {
-    return { ...useWindow(ctx) };
+  setup({ window }, ctx) {
+    ctx.root.$nextTick(() => {
+      ctx.root.$emit('window:data', window);
+    });
+
+    return { ...useWindow(window) };
   }
 });
 </script>
