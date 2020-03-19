@@ -3,7 +3,6 @@ import BookmarksApp from 'src/apps/bookmarks/Bookmarks.vue';
 import { MenuEntryInterface } from 'src/interfaces/Window';
 import store from 'src/store';
 
-import { wm } from 'src/bus/wm.bus';
 import { AppInterface } from 'src/interfaces/App';
 export default class Bookmarks extends Window implements AppInterface {
   public static title = 'Bookie';

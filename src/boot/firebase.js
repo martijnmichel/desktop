@@ -1,5 +1,6 @@
 // import something here
 import firebase from 'firebase/app';
+import 'firebase/analytics';
 // "async" is optional
 export default () => {
   // something to do

@@ -5,9 +5,9 @@
 </template>
 
 <script lang="ts">
-import { defineComponent, watch, onMounted } from '@vue/composition-api';
+import { defineComponent, watch } from '@vue/composition-api';
 import store from 'src/store';
-import * as firebase from 'firebase';
+import firebase from 'firebase/app';
 import 'firebase/auth';
 import 'firebase/firestore';
 import _ from 'lodash';

@@ -75,7 +75,7 @@ import store from 'src/store';
 import _ from 'lodash';
 import { AppInterface } from '../interfaces/App';
 
-import * as firebase from 'firebase';
+import firebase from 'firebase/app';
 import 'firebase/auth';
 
 export default defineComponent({
