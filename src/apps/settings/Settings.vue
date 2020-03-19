@@ -24,19 +24,11 @@
   </div>
 </template>
 <script lang="ts">
-import { defineComponent, PropType, reactive } from '@vue/composition-api';
-import { AppInterface } from 'src/interfaces/App';
+import { defineComponent, reactive } from '@vue/composition-api';
 import DesktopSettings from './DesktopSettings.vue';
 import SoundSettings from './SoundSettings.vue';
 export default defineComponent({
   name: 'SettingsApp' as string,
-
-  props: {
-    ctx: {
-      type: Object as PropType<AppInterface>,
-      required: true
-    }
-  },
   setup() {
     const state = reactive({
       splitterModel: 50,

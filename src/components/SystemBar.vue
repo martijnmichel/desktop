@@ -57,7 +57,7 @@
             <q-item-section>Profile</q-item-section>
           </q-item>
           <q-separator />
-          <q-item clickable v-close-popup>
+          <q-item clickable @click="signout()" v-close-popup>
             <q-item-section avatar>
               <q-icon name="signout" />
             </q-item-section>
@@ -75,15 +75,25 @@ import store from 'src/store';
 import _ from 'lodash';
 import { AppInterface } from '../interfaces/App';
 
+import * as firebase from 'firebase';
+import 'firebase/auth';
+
 export default defineComponent({
   name: '',
-  setup() {
+  setup(props, context) {
     const window = computed(() => {
       return _.find(store.getters['wm/allWindows'], (w: AppInterface) => {
         return w.active === true;
       });
     });
-    return { window };
+
+    function signout() {
+      firebase.auth().signOut();
+      context.root.$router.push('/auth');
+      store.commit('user/remove');
+      store.commit('dm/clean');
+    }
+    return { window, signout };
   }
 });
 </script>

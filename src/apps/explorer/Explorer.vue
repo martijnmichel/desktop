@@ -94,16 +94,9 @@
   </q-splitter>
 </template>
 <script lang="ts">
-import { defineComponent, reactive, PropType } from '@vue/composition-api';
-import { AppInterface } from '../../interfaces/App';
+import { defineComponent, reactive } from '@vue/composition-api';
 export default defineComponent({
   name: 'ExplorerApp' as string,
-  props: {
-    ctx: {
-      type: Object as PropType<AppInterface>,
-      required: true
-    }
-  },
   setup() {
     const state = reactive({
       splitterModel: 50,

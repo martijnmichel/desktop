@@ -57,7 +57,7 @@
           </div>
 
           <div class="col-12" style="height: 100%; overflow-y: auto">
-            <component v-bind:is="window.component" />
+            <component v-bind:is="ctx.component" />
           </div>
         </div>
       </q-card>
@@ -135,7 +135,7 @@ export default defineComponent({
   },
   setup({ ctx }, context) {
     context.root.$nextTick(() => {
-      context.root.$emit('window:data', ctx);
+      context.root.$emit('app:init', ctx);
     });
 
     return { ...useWindow(ctx) };

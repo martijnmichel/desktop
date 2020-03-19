@@ -27,16 +27,8 @@
 </template>
 
 <script lang="ts">
-import { defineComponent, PropType } from '@vue/composition-api';
-import { AppInterface } from 'src/interfaces/App';
+import { defineComponent } from '@vue/composition-api';
 export default defineComponent({
-  name: 'BookieMain' as string,
-  props: {
-    ctx: {
-      type: Object as PropType<AppInterface>,
-      required: true
-    }
-  },
   setup(props, ctx) {
     const bookie: object[] | null = ctx.root.$q.localStorage.getItem(
       'desktop:app:bookie'

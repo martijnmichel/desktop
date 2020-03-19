@@ -9,15 +9,18 @@ import { RouteInterface } from '../../interfaces/Window';
 export default defineComponent({
   name: 'BookmarksApp' as string,
   setup(props, ctx) {
+    // data
     const state = reactive({
       app: {} as AppInterface
     });
-    ctx.root.$on('window:data', (application: AppInterface) => {
-      console.log(application);
+
+    // link app to window
+    ctx.root.$on('app:init', (application: AppInterface) => {
       state.app = application;
-      ctx.root.$off('window:data');
+      ctx.root.$off('app:init');
     });
 
+    // compute route
     const route = computed(() => {
       const page = _.find(
         state.app.routes,

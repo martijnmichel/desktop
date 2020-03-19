@@ -4,9 +4,8 @@ import Vue from 'vue';
 import _ from 'lodash';
 import { StoreInterface } from 'src/store';
 
-export function init(state: State, event: StoreInterface) {
-  console.log(state);
-  Vue.set(state, 'settings', event.wm.settings);
+export function init(state: State, event: StoreInterface['wm']) {
+  Vue.set(state, 'settings', event.settings);
 }
 
 export function addWindow(state: State, event: AppInterface) {
@@ -17,7 +16,7 @@ export function addWindow(state: State, event: AppInterface) {
 
 export function closeWindow(state: State, window: AppInterface) {
   const i = state.windows.findIndex((w: AppInterface) => w.id === window.id);
-  state.windows[i].active = false;
+  if (state.windows[i]) state.windows[i].active = false;
   state.windows.splice(i, 1);
 }
 

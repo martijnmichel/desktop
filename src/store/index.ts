@@ -7,6 +7,7 @@ import { AppInterface } from 'src/interfaces/App';
 
 import wm from './wm';
 import dm from './dm';
+import user from './user';
 
 // import example from './module-example'
 // import exampleState from './module-example/state'
@@ -33,9 +34,13 @@ export interface StoreInterface {
     };
   };
   dm: {
+    loaded: boolean;
     settings: {
       background: string;
     };
+  };
+  user: {
+    auth: firebase.User;
   };
 }
 
@@ -45,7 +50,8 @@ const Store = new Vuex.Store<StoreInterface>({
   modules: {
     // example
     wm,
-    dm
+    dm,
+    user
   },
 
   // enable strict mode (adds overhead!)
