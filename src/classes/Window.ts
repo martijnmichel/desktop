@@ -5,6 +5,8 @@ import _ from 'lodash';
 import uniqid from 'uniqid';
 import { AppInterface } from 'src/interfaces/App';
 
+import { wm } from 'src/bus/wm.bus';
+
 export default class Window implements WindowInterface {
   id = uniqid();
   width = 640;
@@ -28,7 +30,7 @@ export default class Window implements WindowInterface {
           name: 'Close',
           action: () => {
             const { close } = this;
-            close(this);
+            close();
           }
         }
       ]
@@ -51,29 +53,36 @@ export default class Window implements WindowInterface {
     });
   }
   updatePosition(x: number, y: number) {
-    store.commit('wm/updatePosition', { window: this, x, y });
+    this.x = x;
+    this.y = y;
   }
   updateDimensions(width: number, height: number) {
-    store.commit('wm/updateDimensions', { window: this, width, height });
+    this.height = height;
+    this.width = width;
   }
   setActive() {
-    store.commit('wm/setActiveWindow', this);
+    _.each(wm, (w: AppInterface) => {
+      w.active = false;
+    });
+    this.active = true;
   }
-  close(window: WindowInterface) {
-    let w = window;
-    if (!window) w = this;
-    store.commit('wm/closeWindow', w);
+  close() {
+    const i = wm.findIndex((w: AppInterface) => w.id === this.id);
+    wm.splice(i, 1);
   }
   minimize() {
-    store.commit('wm/minimizeWindow', this);
+    this.active = false;
+    this.open = false;
   }
   restore() {
-    store.commit('wm/restoreWindow', this);
+    this.setActive();
+    this.open = true;
   }
   maximize() {
     store.commit('wm/updateWindow', this);
   }
   public to(route: string) {
-    store.commit('wm/updateRoute', { window: this, route: route });
+    this.route.previous = this.route.current;
+    this.route.current = route;
   }
 }

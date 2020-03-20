@@ -4,10 +4,10 @@
       <q-btn dense icon="add" color="primary">
         <q-menu dense auto-close>
           <q-list>
-            <q-item clickable @click="ctx.to('add:bookmark')">
+            <q-item clickable @click="app.to('add:bookmark')">
               <q-item-section>Bookmark</q-item-section>
             </q-item>
-            <q-item clickable @click="ctx.to('add:group')">
+            <q-item clickable @click="app.to('add:group')">
               <q-item-section>Group</q-item-section>
             </q-item>
           </q-list>
@@ -17,14 +17,14 @@
       <q-btn
         dense
         icon="refresh"
-        @click="ctx.get('GET:BOOKMARKS')"
+        @click="app.get('GET:BOOKMARKS')"
         color="primary"
       />
     </q-toolbar>
-    <template v-if="data">
+    <template v-if="app.data">
       <q-list>
         <q-expansion-item
-          v-for="group in data.groups"
+          v-for="group in app.data.groups"
           :key="group.id"
           :label="group.name"
         >
@@ -53,14 +53,11 @@ import { AppInterface } from 'src/interfaces/App';
 
 export default defineComponent({
   props: {
-    ctx: {
+    app: {
       type: Object as PropType<AppInterface>,
       required: true
-    },
-    data: {
-      type: Object
     }
   },
-  setup(props, ctx) {}
+  setup() {}
 });
 </script>

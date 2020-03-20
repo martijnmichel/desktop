@@ -20,7 +20,7 @@
         <q-toolbar>
           <Dash />
 
-          <template v-for="window in windows">
+          <template v-for="window in wm">
             <q-avatar rounded v-bind:key="window.id">
               <q-img
                 :src="window.constructor.icon"
@@ -62,6 +62,8 @@ import Dash from 'src/components/Dash.vue';
 
 import store from 'src/store';
 
+import { wm } from 'src/bus/wm.bus';
+
 export default defineComponent({
   name: 'MainLayout',
 
@@ -89,6 +91,7 @@ export default defineComponent({
       state,
       add,
       windows,
+      wm,
       settings
     };
   }

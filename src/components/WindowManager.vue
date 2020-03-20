@@ -1,29 +1,23 @@
 <template>
   <div id="wm_wrapper">
-    <template v-for="ctx in wm.windows">
+    <template v-for="ctx in wm">
       <window v-bind:key="ctx.id" :ctx="ctx" />
     </template>
   </div>
 </template>
 
 <script lang="ts">
-import { defineComponent, computed, reactive } from '@vue/composition-api';
+import { defineComponent } from '@vue/composition-api';
 
 import Window from 'src/components/Window.vue';
-import store from 'src/store';
-
-import { AppInterface } from 'src/interfaces/App';
+import { wm } from 'src/bus/wm.bus';
 
 export default defineComponent({
   name: 'PageIndex' as string,
   components: { Window },
   computed: {},
   setup() {
-    const windows = computed(() => store.getters['wm/allWindows']);
-    const wm = reactive({
-      windows: [] as AppInterface[]
-    });
-    return { windows, wm };
+    return { wm };
   }
 });
 </script>

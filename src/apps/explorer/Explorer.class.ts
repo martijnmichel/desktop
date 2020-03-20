@@ -1,6 +1,6 @@
 import Window from 'src/classes/Window';
 import ExplorerApp from 'src/apps/explorer/Explorer.vue';
-import store from 'src/store';
+import { wm } from 'src/bus/wm.bus';
 import { AppInterface } from 'src/interfaces/App';
 export default class Explorer extends Window implements AppInterface {
   public root?: string = '/';
@@ -13,7 +13,6 @@ export default class Explorer extends Window implements AppInterface {
 
   public constructor(data: AppInterface) {
     super(data);
-    console.log(this);
-    store.commit('wm/addWindow', this);
+    wm.push(this);
   }
 }

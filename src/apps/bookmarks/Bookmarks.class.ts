@@ -1,15 +1,15 @@
 import Window from 'src/classes/Window';
 import BookmarksApp from 'src/apps/bookmarks/Bookmarks.vue';
 import { MenuEntryInterface } from 'src/interfaces/Window';
-import store from 'src/store';
-import { BookieInterface } from './BookieTypings';
+import { wm } from 'src/bus/wm.bus';
+import { BookieInterface, BookieAppInterface } from './BookieTypings';
 import firebase from 'firebase/app';
 import 'firebase/firestore';
 import 'firebase/auth';
 const fb = firebase.firestore();
 const uid = firebase.auth().currentUser?.uid;
 import { AppInterface } from 'src/interfaces/App';
-export default class Bookmarks extends Window implements AppInterface {
+export default class Bookmarks extends Window implements BookieAppInterface {
   public static title = 'Bookie';
   public component = BookmarksApp;
   app = 'bookmarks';
@@ -48,7 +48,7 @@ export default class Bookmarks extends Window implements AppInterface {
         {
           name: 'Close',
           action: () => {
-            this.close(this);
+            this.close();
           }
         }
       ]
@@ -60,7 +60,7 @@ export default class Bookmarks extends Window implements AppInterface {
     super(data);
 
     this.get('GET:BOOKMARKS');
-    store.commit('wm/addWindow', this);
+    wm.push(this);
   }
   async get(type: string) {
     switch (type) {
@@ -68,7 +68,7 @@ export default class Bookmarks extends Window implements AppInterface {
         await fb
           .doc(`users/${uid}/apps/bookie/`)
           .get()
-          .then((data: QuerySnapshot<BookieInterface['data']>) => {
+          .then(data => {
             this.data = data.data();
           });
     }

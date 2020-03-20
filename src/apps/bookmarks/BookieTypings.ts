@@ -22,6 +22,13 @@ export interface BookieInterface {
   };
 }
 
+export interface BookieAppInterface extends AppInterface {
+  data: {
+    settings: {};
+    groups: BookmarkGroup[];
+  };
+}
+
 export class Group implements BookmarkGroup {
   public name = '';
   public bookmarks: BookmarkItem[] = [];

@@ -1,7 +1,7 @@
 import Window from 'src/classes/Window';
 import SettingsApp from 'src/apps/settings/Settings.vue';
-import store from 'src/store';
 import { AppInterface } from 'src/interfaces/App';
+import { wm } from 'src/bus/wm.bus';
 export default class Settings extends Window implements AppInterface {
   static title = 'Settings';
   public component = SettingsApp;
@@ -14,7 +14,6 @@ export default class Settings extends Window implements AppInterface {
 
   public constructor(data: AppInterface) {
     super(data);
-    console.log(this);
-    store.commit('wm/addWindow', this);
+    wm.push(this);
   }
 }

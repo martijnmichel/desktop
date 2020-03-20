@@ -78,11 +78,13 @@ import { AppInterface } from '../interfaces/App';
 import firebase from 'firebase/app';
 import 'firebase/auth';
 
+import { wm } from 'src/bus/wm.bus';
+
 export default defineComponent({
   name: '',
   setup(props, context) {
     const window = computed(() => {
-      return _.find(store.getters['wm/allWindows'], (w: AppInterface) => {
+      return _.find(wm, (w: AppInterface) => {
         return w.active === true;
       });
     });
