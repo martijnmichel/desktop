@@ -1,6 +1,6 @@
 <template>
   <q-list>
-    <q-toolbar>
+    <q-toolbar class="q-gutter-xs">
       <q-btn dense icon="add" color="primary">
         <q-menu dense auto-close>
           <q-list>
@@ -13,51 +13,54 @@
           </q-list>
         </q-menu>
       </q-btn>
-      <q-btn dense icon="refresh" @click="refresh()" color="primary" />
+      <q-space />
+      <q-btn
+        dense
+        icon="refresh"
+        @click="ctx.get('GET:BOOKMARKS')"
+        color="primary"
+      />
     </q-toolbar>
-    <template v-if="state">
-      <q-expansion-item
-        v-for="(group, index) in state.bookmarks"
-        :key="index"
-        :label="group.name"
-      >
-        <span v-if="!group.bookmarks">
-          No bookmarks yet, go add some...
-        </span>
-      </q-expansion-item>
+    <template v-if="data">
+      <q-list>
+        <q-expansion-item
+          v-for="group in data.groups"
+          :key="group.id"
+          :label="group.name"
+        >
+          <q-item>
+            <q-item-section>
+              <span v-if="group.bookmarks.length === 0">
+                No bookmarks yet, go add some...
+              </span>
+
+              <div class="row" v-else>
+                <div class="col-3">
+                  {{ group.id }}
+                </div>
+              </div>
+            </q-item-section>
+          </q-item>
+        </q-expansion-item>
+      </q-list>
     </template>
   </q-list>
 </template>
 
 <script lang="ts">
-import {
-  defineComponent,
-  ref,
-  PropType,
-  onMounted,
-  reactive
-} from '@vue/composition-api';
+import { defineComponent, PropType } from '@vue/composition-api';
 import { AppInterface } from 'src/interfaces/App';
-import db from '../firestore';
 
 export default defineComponent({
   props: {
     ctx: {
       type: Object as PropType<AppInterface>,
       required: true
+    },
+    data: {
+      type: Object
     }
   },
-  setup(props, ctx) {
-    let state = ref({});
-
-    async function refresh() {
-      const bookmarks = await db('GET:BOOKMARKS');
-      state = ref(bookmarks);
-    }
-
-    refresh();
-
-    return { state, refresh };
-  }
+  setup(props, ctx) {}
 });
 </script>

@@ -22,44 +22,34 @@
 <script lang="ts">
 import { defineComponent, PropType, ref } from '@vue/composition-api';
 import { AppInterface } from 'src/interfaces/App';
-import uniqid from 'uniqid';
 import db from '../firestore';
+import { BookieInterface, Group } from '../BookieTypings';
 export default defineComponent({
   name: 'AddGroup' as string,
   props: {
     ctx: {
       type: Object as PropType<AppInterface>,
       required: true
+    },
+    data: {
+      type: Object as PropType<BookieInterface['data']>,
+      required: true
     }
   },
   setup(props, ctx) {
     const name = ref('');
     function save() {
-      let bookie: object[] | null = ctx.root.$q.localStorage.getItem(
-        'desktop:app:bookie'
-      );
-      interface Group {
-        name: string;
-        id: string;
-      }
-      class Group implements Group {
-        public name = '';
-        public id: string = uniqid();
-        constructor(name: string) {
-          this.name = name;
-        }
-      }
+      let groups = props.data.groups;
 
       const g = new Group(name.value);
 
-      if (bookie) bookie.push(JSON.parse(JSON.stringify(g)));
+      if (groups) groups.push(JSON.parse(JSON.stringify(g)));
       else {
-        bookie = [];
-        bookie.push(JSON.parse(JSON.stringify(g)));
+        groups = [];
+        groups.push(JSON.parse(JSON.stringify(g)));
       }
-      //ctx.root.$q.localStorage.set('desktop:app:bookie', bookie);
-      console.log(bookie);
-      db('ADD:BOOKMARK', bookie);
+
+      db.set('ADD:GROUP', groups);
 
       props.ctx.to('');
     }
