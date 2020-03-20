@@ -10,8 +10,16 @@ const routes: RouteConfig[] = [
     path: '/',
     component: () => import('layouts/Auth.vue'),
     children: [
-      { path: 'auth', component: () => import('pages/auth/Login.vue') },
-      { path: 'load', component: () => import('pages/auth/Load.vue') }
+      {
+        path: 'auth',
+        name: 'auth',
+        component: () => import('pages/auth/Login.vue')
+      },
+      {
+        path: 'load',
+        name: 'load',
+        component: () => import('pages/auth/Load.vue')
+      }
     ]
   }
 ];

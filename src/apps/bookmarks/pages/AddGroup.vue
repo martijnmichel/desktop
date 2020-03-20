@@ -23,6 +23,7 @@
 import { defineComponent, PropType, ref } from '@vue/composition-api';
 import { AppInterface } from 'src/interfaces/App';
 import uniqid from 'uniqid';
+import db from '../firestore';
 export default defineComponent({
   name: 'AddGroup' as string,
   props: {
@@ -49,12 +50,17 @@ export default defineComponent({
         }
       }
 
-      if (bookie) bookie.push(new Group(name.value));
+      const g = new Group(name.value);
+
+      if (bookie) bookie.push(JSON.parse(JSON.stringify(g)));
       else {
         bookie = [];
-        bookie.push(new Group(name.value));
+        bookie.push(JSON.parse(JSON.stringify(g)));
       }
-      ctx.root.$q.localStorage.set('desktop:app:bookie', bookie);
+      //ctx.root.$q.localStorage.set('desktop:app:bookie', bookie);
+      console.log(bookie);
+      db('ADD:BOOKMARK', bookie);
+
       props.ctx.to('');
     }
     return { name, save };

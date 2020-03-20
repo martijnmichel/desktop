@@ -22,7 +22,7 @@
           <q-avatar size="100px">
             <q-img :ratio="4 / 3" :src="user.icon || '/statics/bg1.jpeg'" />
           </q-avatar>
-          {{ user.displayName || 'anoniem' }}
+          {{ user.displayName || 'anony' }}
         </q-btn>
       </div>
       <div class="col-12">

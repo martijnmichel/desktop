@@ -13,10 +13,11 @@
           </q-list>
         </q-menu>
       </q-btn>
+      <q-btn dense icon="refresh" @click="refresh()" color="primary" />
     </q-toolbar>
-    <template v-if="bookie">
+    <template v-if="state">
       <q-expansion-item
-        v-for="(group, index) in bookie"
+        v-for="(group, index) in state.bookmarks"
         :key="index"
         :label="group.name"
       >
@@ -29,8 +30,16 @@
 </template>
 
 <script lang="ts">
-import { defineComponent, ref, PropType } from '@vue/composition-api';
+import {
+  defineComponent,
+  ref,
+  PropType,
+  onMounted,
+  reactive
+} from '@vue/composition-api';
 import { AppInterface } from 'src/interfaces/App';
+import db from '../firestore';
+
 export default defineComponent({
   props: {
     ctx: {
@@ -39,12 +48,16 @@ export default defineComponent({
     }
   },
   setup(props, ctx) {
-    const bookmarks: object[] | null = ctx.root.$q.localStorage.getItem(
-      'desktop:app:bookie'
-    );
+    let state = ref({});
 
-    const bookie = ref(bookmarks);
-    return { bookie };
+    async function refresh() {
+      const bookmarks = await db('GET:BOOKMARKS');
+      state = ref(bookmarks);
+    }
+
+    refresh();
+
+    return { state, refresh };
   }
 });
 </script>
