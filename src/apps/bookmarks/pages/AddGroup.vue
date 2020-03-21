@@ -34,17 +34,13 @@ export default defineComponent({
   setup(props) {
     const name = ref('');
     function save() {
-      let groups = props.app.data.groups;
+      const groups = props.app.data.groups || [];
 
       const g = new Group(name.value);
 
-      if (groups) groups.push(JSON.parse(JSON.stringify(g)));
-      else {
-        groups = [];
-        groups.push(JSON.parse(JSON.stringify(g)));
-      }
+      groups.push(JSON.parse(JSON.stringify(g)));
 
-      db.set('ADD:GROUP', groups);
+      props.app.set('ADD:GROUP', groups);
 
       props.app.to('');
     }

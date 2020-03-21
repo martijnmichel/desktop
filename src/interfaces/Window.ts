@@ -1,4 +1,5 @@
 import { AppInterface } from './App';
+import { LooseDictionary } from 'quasar';
 
 export interface MenuItemInterface {
   name?: string;
@@ -19,6 +20,11 @@ export interface WindowInterface {
   width: number;
   height: number;
   theme: string;
+  route?: {
+    params: LooseDictionary;
+    current: RouteInterface;
+    previous: RouteInterface;
+  };
   routes?: RouteInterface[];
   menu: MenuEntryInterface[] | boolean;
   preventMultiple: boolean;
@@ -33,5 +39,4 @@ export interface WindowInterface {
   updatePosition: (x: number, y: number) => void;
   updateDimensions: (width: number, height: number) => void;
   setActive: () => void;
-  to: (route: string) => void;
 }

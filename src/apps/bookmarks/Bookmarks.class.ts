@@ -1,11 +1,12 @@
 import Window from 'src/classes/Window';
 import BookmarksApp from 'src/apps/bookmarks/Bookmarks.vue';
-import { MenuEntryInterface } from 'src/interfaces/Window';
+import { MenuEntryInterface, RouteInterface } from 'src/interfaces/Window';
 import { wm } from 'src/bus/wm.bus';
 import { BookieInterface, BookieAppInterface } from './BookieTypings';
 import firebase from 'firebase/app';
 import 'firebase/firestore';
 import 'firebase/auth';
+import { LooseDictionary } from 'quasar';
 const fb = firebase.firestore();
 const uid = firebase.auth().currentUser?.uid;
 import { AppInterface } from 'src/interfaces/App';
@@ -14,6 +15,7 @@ export default class Bookmarks extends Window implements BookieAppInterface {
   public component = BookmarksApp;
   app = 'bookmarks';
   data = {} as BookieInterface['data'];
+
   routes = [
     {
       name: '',
@@ -28,6 +30,14 @@ export default class Bookmarks extends Window implements BookieAppInterface {
       component: () => import('./pages/AddBookmark.vue')
     }
   ];
+  route = {
+    params: {} as LooseDictionary,
+    current: {
+      name: '',
+      component: () => import('./pages/Bookie.vue')
+    } as RouteInterface,
+    previous: {} as RouteInterface
+  };
   menu = [
     {
       name: 'File',
@@ -62,6 +72,13 @@ export default class Bookmarks extends Window implements BookieAppInterface {
     this.get('GET:BOOKMARKS');
     wm.push(this);
   }
+  to(name: string, params?: undefined | LooseDictionary) {
+    const route = this.routes.find((r: RouteInterface) => r.name === name);
+    if (!route) return false;
+    this.route.previous = this.route.current;
+    this.route.current = route;
+    this.route.params = params || {};
+  }
   async get(type: string) {
     switch (type) {
       case 'GET:BOOKMARKS':
@@ -69,8 +86,25 @@ export default class Bookmarks extends Window implements BookieAppInterface {
           .doc(`users/${uid}/apps/bookie/`)
           .get()
           .then(data => {
-            this.data = data.data();
+            if (!data) return false;
+            this.data = data.data() || {};
           });
+    }
+  }
+  async set(type: string, args: LooseDictionary) {
+    switch (type) {
+      case 'ADD:GROUP':
+        return fb
+          .doc(`users/${uid}/apps/bookie/`)
+          .set({ groups: args }, { merge: true });
+      case 'ADD:BOOKMARK':
+        return fb.doc(`users/${uid}/apps/bookie/`).update({
+          groups: {
+            [args.index]: {
+              bookmarks: args.bookmarks
+            }
+          }
+        });
     }
   }
 }

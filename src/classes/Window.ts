@@ -18,10 +18,6 @@ export default class Window implements WindowInterface {
   active = true;
   running = true;
   open = true;
-  route = {
-    current: '',
-    previous: ''
-  };
   menu = [
     {
       name: 'File',
@@ -80,9 +76,5 @@ export default class Window implements WindowInterface {
   }
   maximize() {
     store.commit('wm/updateWindow', this);
-  }
-  public to(route: string) {
-    this.route.previous = this.route.current;
-    this.route.current = route;
   }
 }

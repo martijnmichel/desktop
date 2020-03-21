@@ -1,5 +1,6 @@
 import { AppInterface } from 'src/interfaces/App';
 import uniqid from 'uniqid';
+import { LooseDictionary } from 'quasar';
 
 export interface BookmarkItem {
   name: string;
@@ -27,6 +28,7 @@ export interface BookieAppInterface extends AppInterface {
     settings: {};
     groups: BookmarkGroup[];
   };
+  set: (type: string, args: LooseDictionary) => void;
 }
 
 export class Group implements BookmarkGroup {

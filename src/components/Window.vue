@@ -133,7 +133,7 @@ export default defineComponent({
   components: {
     VueDraggableResizable
   },
-  setup({ ctx }, context) {
+  setup({ ctx }) {
     /*
     context.root.$nextTick(() => {
       context.root.$emit('app:init', ctx);

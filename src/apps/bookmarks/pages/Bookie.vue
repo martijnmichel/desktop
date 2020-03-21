@@ -27,17 +27,32 @@
           v-for="group in app.data.groups"
           :key="group.id"
           :label="group.name"
+          default-opened
         >
           <q-item>
             <q-item-section>
-              <span v-if="group.bookmarks.length === 0">
-                No bookmarks yet, go add some...
-              </span>
+              <div class="row q-gutter-md">
+                <q-btn
+                  flat
+                  class="bg-grey-2"
+                  v-for="bookmark in group.bookmarks"
+                  :key="bookmark.id"
+                  stack
+                  @click="open(bookmark.url)"
+                  type="a"
+                >
+                  <q-icon name="link" size="4em" />
+                  {{ bookmark.name }}
+                </q-btn>
 
-              <div class="row" v-else>
-                <div class="col-3">
-                  {{ group.id }}
-                </div>
+                <q-btn
+                  flat
+                  class="bg-grey-2"
+                  size="2em"
+                  icon="add"
+                  outline
+                  @click="app.to('add:bookmark', { group: group.name })"
+                />
               </div>
             </q-item-section>
           </q-item>
@@ -58,6 +73,13 @@ export default defineComponent({
       required: true
     }
   },
-  setup() {}
+  setup() {
+    function open(url: string) {
+      const win = window.open(url, '_blank');
+
+      if (win) win.focus();
+    }
+    return { open };
+  }
 });
 </script>
